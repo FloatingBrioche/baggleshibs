@@ -20,7 +20,7 @@ class Player:
         if placement.orientation == "v":
             end_index = placement.row + chosen_ship.length
 
-            if end_index > self.board.rows - 1:
+            if end_index > self.board.rows:
                 self.unplaced_ships.insert(ship_index, chosen_ship)
                 raise InvalidPlacement("Ship placement excedes bottom of board. Try placing the ship higher up.")
             
@@ -28,7 +28,7 @@ class Player:
 
         if placement.orientation == "h":
             end_index = placement.col + chosen_ship.length
-            if end_index > self.board.columns - 1: 
+            if end_index > self.board.columns: 
                 self.unplaced_ships.insert(ship_index, chosen_ship)
                 raise InvalidPlacement("Ship placement excedes right of board. Try placing the ship further left.")
             

@@ -96,17 +96,17 @@ class UserInterface:
 
     def _prompt_for_ship_placement(self, player):
         ships_left: int = len(player.unplaced_ships)
-        max_row = player.board.rows + 1
-        max_col = player.board.columns + 1
+        max_row = player.board.rows + 1 # not inclusive
+        max_col = player.board.columns + 1 # not inclusive
         chosen_ship: int = self._prompt_int("\nWhich ship do you wish to place?", 0, ships_left + 1)
 
         while True:
             try:
                 
                 orientation: str = self._prompt("Vertical (v) or horizontal (h)?", ("v", "h"))
-                row: int = self._prompt_int("Which row?", 0, max_row)
-                col: int = self._prompt_int("Which column?", 0, max_col)
-                placement = ShipPlacement(orientation, row - 1, col - 1)
+                row: int = self._prompt_int("Which row?", 0, max_row) # not zero-indexed
+                col: int = self._prompt_int("Which column?", 0, max_col) # not zero-indexed
+                placement = ShipPlacement(orientation, row - 1, col - 1) # adjust for zero-indexing
                 player.place_ship(chosen_ship - 1,  placement)
                 break
             except InvalidPlacement as e:
