@@ -2,16 +2,19 @@ import unittest
 
 from lib.user_interface import UserInterface
 from lib.game import Game
-from tests.terminal_interface_helper_mock import TerminalInterfaceHelperMock, mock_io
+from tests.terminal_interface_helper_mock import mock_io_p1_wins, mock_io_invalid_moves
 
 
 class TestUserInterface(unittest.TestCase):
     def test_setup_and_p1_winner_scenario(self):
-        interface = UserInterface(mock_io, Game())
+        interface = UserInterface(mock_io_p1_wins, Game())
         interface.set_up_game()
         interface.run()
 
-
+    def test_exception_handling_scenarios(self):
+        interface = UserInterface(mock_io_invalid_moves, Game())
+        interface.set_up_game()
+        interface.run()
 
 # Old test case using TerminalInterfaceHelperMock
 """

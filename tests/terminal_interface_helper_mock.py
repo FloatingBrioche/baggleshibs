@@ -1,9 +1,10 @@
 from unittest.mock import Mock
     
 
-mock_io = Mock()
+mock_io_p1_wins = Mock()
+mock_io_invalid_moves = Mock()
 
-mock_io.get_input.side_effect = [
+mock_io_p1_wins.get_input.side_effect = [
     "Egg Face", 
 # ship, v/h, row, col
     1, 'h', 1, 1,   
@@ -25,6 +26,106 @@ mock_io.get_input.side_effect = [
     "ready",
     1, 1,
     "ready",
+    1, 2,
+    "ready",
+    1, 2,
+    "ready",
+
+    ## Destroy second ship
+    2, 1,
+    "ready",
+    2, 1,
+    "ready",
+    2, 2,
+    "ready",
+    2, 2,
+    "ready",
+    2, 3,
+    "ready",
+    2, 3,
+    "ready",
+
+    ## Destroy third ship
+    "q", 3, 15, 1, # test user_interface._prompt_int() exception handling
+    "ready",
+    3, 1,
+    "ready",
+    3, 2,
+    "ready",
+    3, 2,
+    "ready",
+    3, 3,
+    "ready",
+    3, 3,
+    "ready",
+
+    ## Destroy fourth ship
+    4, 1,
+    "ready",
+    4, 1,
+    "ready",
+    4, 2,
+    "ready",
+    4, 2,
+    "ready",
+    4, 3,
+    "ready",
+    4, 3,
+    "ready",
+    4, 4,
+    "ready",
+    4, 4,
+    "ready",
+
+    ## Destroy fifth ship
+    5, 1,
+    "ready",
+    5, 1,
+    "ready",
+    5, 2, 
+    "ready",
+    5, 2,
+    "ready",
+    5, 3,
+    "ready",
+    5, 3,
+    "ready",
+    5, 4,
+    "ready",
+    5, 4,
+    "ready",
+    5, 5,
+    "ready",
+    5, 5,
+    "ready"
+    ]
+    
+
+mock_io_invalid_moves.get_input.side_effect = [
+    "Egg Face", 
+# ship, v/h, row, col
+    1, 'h', 1, 1,
+    1, 'h', 1, 1, # will raise InvalidPlacement
+    1, 'h', 2, 1,
+    1, 'h', 3, 1,
+    1, 'h', 4, 1,
+    1, 'h', 5, 9, # will raise InvalidPlacement
+    1, 'h', 5, 1,
+    'ready',
+    "Blob Face",
+    1, 'h', 1, 1,   
+    1, 'h', 2, 1,
+    1, 'h', 3, 1,
+    1, 'h', 4, 1,
+    1, 'h', 5, 1,
+    'ready',
+    # game starts
+    ## Destroy first ship
+    1, 1,
+    "ready",
+    1, 1,
+    "ready",
+    1, 1, # will raise InvalidTurn
     1, 2,
     "ready",
     1, 2,
@@ -98,5 +199,3 @@ mock_io.get_input.side_effect = [
     5, 5,
     "ready"
     ]
-    
-
