@@ -7,15 +7,15 @@ Baggleshibs is command-line game similar to battleships for people who prefer th
 
 How to get started:
 
-- Start your venv
+- Start your venv:
 `python -m venv venv`
 
-- Install the requirements
+- Install the requirements:
 `pip install -r requirements.txt`
 
-- Check the tests and behaviour
+- Check the tests and behaviour:
 `pytest --testdox`
 
-- Run the game
+- Run the game:
 `python run.py`
 
