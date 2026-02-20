@@ -29,13 +29,13 @@ class Board:
         str_positions = [
             " ".join([pos.show_to_self() for pos in row]) for row in self.positions
             ]
-        return "\n".join(str_positions) + '\n'
+        return "\n".join(str_positions)
     
     def show_to_opp(self):
         str_positions = [
             " ".join([pos.show_to_opp() for pos in row]) for row in self.positions
             ]
-        return "\n".join(str_positions) + '\n'
+        return "\n".join(str_positions)
 
 
 

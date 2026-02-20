@@ -66,9 +66,9 @@ class TestBoard:
     @mark.it(".show_to_self() returns 'empty' board if no ships placed")
     def test_show_to_self_returns_str_of_board(self, default_board):
         output = default_board.show_to_self()
-        assert output == '. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n'
+        assert output == '. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .'
 
     @mark.it(".show_to_opp() returns 'empty' board if no shots fired")
     def test_show_to_opp_returns_str_of_board(self, default_board):
         output = default_board.show_to_opp()
-        assert output == '. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n'
+        assert output == '. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .\n. . . . . . . . . .'
