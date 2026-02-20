@@ -23,19 +23,22 @@ class TerminalIO:
         self.console.rule(f"[bold blue]{message}")
     
     def slow_write(self, message):
+        self.console.print("")
         words = message.split()
         for word in words[:-1]:
             self.console.print(word, end=' ')
             sleep(0.13)
-
         self.console.print(words[-1])
 
     def show_board(self, board):
-        console.clear()
-
-        table = Table()
+        table = Table(show_header=False)
         table.add_row(board)
+        console.print(table)
 
+    def show_ships(self, ships, ship_nums):
+        table = Table(show_lines=True, show_header=False)
+        table.add_row("Ship", *ship_nums)
+        table.add_row("Ship length", *ships)
         console.print(table)
 
 

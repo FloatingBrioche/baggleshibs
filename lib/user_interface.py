@@ -20,9 +20,9 @@ class UserInterface:
         while not (winner := self.game.get_winner()):
             turn = next(self.game.turns)
             self._bar(f"Turn {turn['turn']} – Current player: {turn['player'].name}")
-            self._show("Opponents board:\n")
+            self._slow_write("Opponents board:\n")
             opp_board = turn['opponent'].board
-            self._show(opp_board.show_to_opp())
+            self._show_board(opp_board.show_to_opp())
             self._prompt_take_turn(turn['player'], opp_board)
         
         self._show(f"Congratulations, {winner.name}! You won!")
@@ -36,13 +36,13 @@ class UserInterface:
         while player.unplaced_ships:
             self._set_up_ships(player)
 
+
     def _set_up_ships(self, player):
-        enum_ships = {i: v.length for i, v in enumerate(player.unplaced_ships, start=1)}
-        self._slow_write(f"You have these ships remaining:")
-        for num, ship in enum_ships.items():
-            self._show(f"  {num}: {ship}")
+        ships = player.unplaced_ships
+        self._slow_write("These are your unplaced ships:")
+        self._show_unplaced_ships(ships)
         self._prompt_for_ship_placement(player)
-        self._slow_write("This is your board now:" + '\n')
+        self._slow_write("This is your board now:\n")
         self._show_board(player.board.show_to_self())   
 
     def _show(self, message):
@@ -56,6 +56,11 @@ class UserInterface:
 
     def _show_board(self, board):
         self.io.show_board(board)
+
+    def _show_unplaced_ships(self, ships):
+        ship_strs = [str(ship.length) for ship in ships]
+        ship_nums = [str(num) for num in range(1, len(ships) + 1)]
+        self.io.show_ships(ship_strs, ship_nums)
 
     def _prompt(self, message, expected_input=None):
         while True:
@@ -87,7 +92,7 @@ class UserInterface:
         ships_left: int = len(player.unplaced_ships)
         max_row = player.board.rows + 1
         max_col = player.board.columns + 1
-        chosen_ship: int = self._prompt_int("Which ship do you wish to place?", 0, ships_left + 1)
+        chosen_ship: int = self._prompt_int("\nWhich ship do you wish to place?", 0, ships_left + 1)
 
         while True:
             try:
@@ -96,7 +101,7 @@ class UserInterface:
                 row: int = self._prompt_int("Which row?", 0, max_row)
                 col: int = self._prompt_int("Which column?", 0, max_col)
                 placement = ShipPlacement(orientation, row - 1, col - 1)
-                self._show("OK.\n")
+                self._show("OK.")
                 player.place_ship(chosen_ship - 1,  placement)
                 break
             except InvalidPlacement as e:
