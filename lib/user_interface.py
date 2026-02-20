@@ -8,18 +8,18 @@ class UserInterface:
         self.game = game
 
     def set_up_game(self):
-        self._show("Welcome to the game!")
-        self._show("First, we'll get things set up, starting with player 1")
+        self._bar("Welcome to the Baggleships!")
+        self._slow_write("First, we'll get things set up, starting with player 1.")
         self._set_up_player(1)
-        self._show("Now it's your turn, player 2.")
+        self._slow_write("Now it's your turn, player 2.")
         self._set_up_player(2)
-        self._show("Alright! Now let's get down to business!")
+        self._slow_write("Alright! Now let's get down to business!")
         setattr(self.game, "turns", self.game.get_turns())
 
     def run(self):
         while not (winner := self.game.get_winner()):
             turn = next(self.game.turns)
-            self._show(f"Turn {turn['turn']} – Current player: {turn['player'].name}")
+            self._bar(f"Turn {turn['turn']} – Current player: {turn['player'].name}")
             self._show("Opponents board:\n")
             opp_board = turn['opponent'].board
             self._show(opp_board.show_to_opp())
@@ -31,26 +31,35 @@ class UserInterface:
     def _set_up_player(self, player_num):
         name = self._prompt(f"So, player {player_num}, what's your name?")
         player = self.game.add_player(player_num, name)
-        self._show(f"Okay, {name}, let's get your ships set up.")
+        self._bar(f"Player {player_num}: {name}")
+        self._slow_write(f"Okay, {name}, let's get your ships set up.")
         while player.unplaced_ships:
             self._set_up_ships(player)
 
     def _set_up_ships(self, player):
         enum_ships = {i: v.length for i, v in enumerate(player.unplaced_ships, start=1)}
-        self._show(f"You have these ships remaining:")
+        self._slow_write(f"You have these ships remaining:")
         for num, ship in enum_ships.items():
             self._show(f"  {num}: {ship}")
         self._prompt_for_ship_placement(player)
-        self._show("This is your board now:" + '\n')
-        self._show(player.board.show_to_self())   
+        self._slow_write("This is your board now:" + '\n')
+        self._show_board(player.board.show_to_self())   
 
     def _show(self, message):
         self.io.write(message + "\n")
 
+    def _slow_write(self, message):
+        self.io.slow_write(message)
+
+    def _bar(self, message):
+        self.io.write_bar(message)
+
+    def _show_board(self, board):
+        self.io.show_board(board)
+
     def _prompt(self, message, expected_input=None):
         while True:
-            self.io.write(message + "\n")
-            input = self.io.readline().strip()
+            input = self.io.get_input(message)
             if not expected_input:
                 break
             if input not in expected_input:
@@ -61,10 +70,8 @@ class UserInterface:
         return input
     
     def _prompt_int(self, message, min, max):
-        self.io.write(message + "\n")
-        
         while True:
-            input = self.io.readline().strip()
+            input = self.io.get_input(message)
             try:
                 input_int = int(input)
                 if min < input_int < max:
@@ -85,7 +92,7 @@ class UserInterface:
         while True:
             try:
                 
-                orientation: str = self._prompt("Vertical or horizontal? [vh]", ("v", "h"))
+                orientation: str = self._prompt("Vertical (v) or horizontal (h)?", ("v", "h"))
                 row: int = self._prompt_int("Which row?", 0, max_row)
                 col: int = self._prompt_int("Which column?", 0, max_col)
                 placement = ShipPlacement(orientation, row - 1, col - 1)
