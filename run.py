@@ -33,13 +33,13 @@ class TerminalIO:
     def show_board(self, board):
         table = Table(show_header=False)
         table.add_row(board)
-        console.print(table)
+        self.console.print(table)
 
     def show_ships(self, ships, ship_nums):
         table = Table(show_lines=True, show_header=False)
         table.add_row("Ship", *ship_nums)
         table.add_row("Ship length", *ships)
-        console.print(table)
+        self.console.print(table)
 
 
 io = TerminalIO(console)

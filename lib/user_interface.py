@@ -8,9 +8,11 @@ class UserInterface:
         self.game = game
 
     def set_up_game(self):
+        self.io.console.clear()
         self._bar("Welcome to the Baggleships!")
         self._slow_write("First, we'll get things set up, starting with player 1.")
         self._set_up_player(1)
+        self.io.console.clear()
         self._slow_write("Now it's your turn, player 2.")
         self._set_up_player(2)
         self._slow_write("Alright! Now let's get down to business!")
@@ -19,11 +21,14 @@ class UserInterface:
     def run(self):
         while not (winner := self.game.get_winner()):
             turn = next(self.game.turns)
+            opponent = turn['opponent']
+            self.io.console.clear()
             self._bar(f"Turn {turn['turn']} – Current player: {turn['player'].name}")
-            self._slow_write("Opponents board:\n")
-            opp_board = turn['opponent'].board
+            self._slow_write(f"{opponent.name}'s board:\n")
+            opp_board = opponent.board
             self._show_board(opp_board.show_to_opp())
             self._prompt_take_turn(turn['player'], opp_board)
+            self._prompt("Ready for next player?")
         
         self._show(f"Congratulations, {winner.name}! You won!")
 
@@ -35,6 +40,7 @@ class UserInterface:
         self._slow_write(f"Okay, {name}, let's get your ships set up.")
         while player.unplaced_ships:
             self._set_up_ships(player)
+        self._prompt("Ready for next player?")
 
 
     def _set_up_ships(self, player):
@@ -101,7 +107,6 @@ class UserInterface:
                 row: int = self._prompt_int("Which row?", 0, max_row)
                 col: int = self._prompt_int("Which column?", 0, max_col)
                 placement = ShipPlacement(orientation, row - 1, col - 1)
-                self._show("OK.")
                 player.place_ship(chosen_ship - 1,  placement)
                 break
             except InvalidPlacement as e:
