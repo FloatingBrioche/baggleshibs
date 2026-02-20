@@ -2,14 +2,20 @@ import unittest
 
 from lib.user_interface import UserInterface
 from lib.game import Game
-from tests.terminal_interface_helper_mock import TerminalInterfaceHelperMock
+from tests.terminal_interface_helper_mock import TerminalInterfaceHelperMock, mock_io
 
-"""
+
 class TestUserInterface(unittest.TestCase):
-    def test_ship_setup_scenario(self):
-        io = TerminalInterfaceHelperMock()
-        interface = UserInterface(io, Game())
-        io.expect_print("Welcome to the game!")
+    def test_setup_and_p1_winner_scenario(self):
+        interface = UserInterface(mock_io, Game())
+        interface.set_up_game()
+        interface.run()
+
+
+
+# Old test case using TerminalInterfaceHelperMock
+"""
+       io.expect_print("Welcome to the game!")
         
         # ---------------------------------------- PLayer 1
         io.expect_print("First, we'll get things set up, starting with player 1")
@@ -332,7 +338,5 @@ class TestUserInterface(unittest.TestCase):
             ". . . . . . . . . .",
         ]))
 
-
         io.expect_print("Alright! Now let's get down to business!")
-        interface.set_up_game()
 """

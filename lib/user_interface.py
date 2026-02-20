@@ -9,7 +9,7 @@ class UserInterface:
 
     def set_up_game(self):
         self.io.console.clear()
-        self._bar("Welcome to the Baggleships!")
+        self._bar("Welcome to the Baggleshibs!")
         self._slow_write("First, we'll get things set up, starting with player 1.")
         self._set_up_player(1)
         self.io.console.clear()
@@ -28,7 +28,7 @@ class UserInterface:
             opp_board = opponent.board
             self._show_board(opp_board.show_to_opp())
             self._prompt_take_turn(turn['player'], opp_board)
-            self._prompt("Ready for next player?")
+            self._prompt("Ready for the next player?")
         
         self._show(f"Congratulations, {winner.name}! You won!")
 
